@@ -27,7 +27,7 @@ const authMiddleware=(req,res,next)=>{
 }
 app.use(express.json());
 app.listen(3000,()=>{
-  console.log("server started at port :3000");
+  console.log("server started....");
 })
 
 
@@ -53,12 +53,31 @@ app.post('/login',(req,res)=>{
         res.status(result.statusCode).json(result)
       })
   });
+
   app.post('/register',(req,res)=>{
-    console.log(req.body.uID)
-    console.log(req.body.userName)
-    console.log(req.body.password)
-    dataservice.register(req,req.body.uID,req.body.userName,req.body.password)
+    dataservice.register(req.body.uID,req.body.userName,req.body.password)
 .then(result=>{
   res.status(result.statusCode).json(result)
+})
+});
+app.post('/deleteEvent',(req,res)=>{
+  dataservice.deleteEvent(req.body.eventdet,req.body.uID)
+.then(result=>{
+res.status(result.statusCode).json(result)
+})
+});
+  
+app.post('/displayRemainder',(req,res)=>{
+ 
+  dataservice.displayRemainder(req.body.uID)
+.then(result=>{
+res.status(result.statusCode).json(result)
+})
+});
+app.post('/updateRainder',(req,res)=>{
+  //console.log(req);
+  dataservice.updateRainder(req.body.uID,req.body.indexNum,req.body.eDate,req.body.eDetails)
+.then(result=>{
+res.status(result.statusCode).json(result)
 })
 });
